@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista Meditații{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-center text-gray-800">Lista Meditații</h2>
+<div class="overflow-x-auto mt-6">
+    <table class="w-full bg-white shadow-md rounded-lg">
+        <thead class="bg-blue-600 text-white">
+            <tr>
+                <th class="py-2 px-4">Data</th>
+                <th class="py-2 px-4">{% if user.user_type == 'student' %}Profesor{% else %}Student{% endif %}</th>
+                <th class="py-2 px-4">Sumă</th>
+                <th class="py-2 px-4">Status plată</th>
+                <th class="py-2 px-4">Acțiuni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for meditation in meditations %}
+            <tr class="border-b">
+                <td class="py-2 text-center px-4">{{ meditation.date }}</td>
+                <td class="py-2 text-center px-4">
+                    {% if user.user_type == 'teacher' %}
+                        <a href="{% url 'student_details' meditation.student.username %}"
+                           class="text-blue-600 hover:text-blue-800 hover:underline">
+                            {{ meditation.student.username }}
+                        </a>
+                    {% else %}
+                        {{ meditation.teacher.username }}
+                    {% endif %}
+                </td>
+                <td class="py-2 text-center px-4">{{ meditation.payment_amount }} lei</td>
+                <td class="py-2 text-center px-4">
+                    {% if meditation.payment_status == 'unpaid' %}
+                        <span class="text-red-600 font-semibold">Neplătit</span>
+                    {% elif meditation.payment_status == 'pending' %}
+                        <span class="text-orange-600 font-semibold">În așteptare</span>
+                    {% else %}
+                        <span class="text-green-600 font-semibold">Plătit</span>
+                    {% endif %}
+                </td>
+                <td class="py-2 text-center px-4">
+                    {% if user.user_type == 'student' and meditation.payment_status == 'unpaid' %}
+                        <form method="post" action="{% url 'mark_pending' meditation.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-yellow-500 text-white py-1 px-3 rounded-lg hover:bg-yellow-600">Marchează ca plătit</button>
+                        </form>
+                    {% endif %}
+
+                    {% if user.user_type == 'teacher' and meditation.payment_status == 'pending' %}
+                        <form method="post" action="{% url 'mark_paid' meditation.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-green-600 text-white py-1 px-3 rounded-lg hover:bg-green-700">Confirmă plata</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

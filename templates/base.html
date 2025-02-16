@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ro" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistem Meditații{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-full flex flex-col">
+    <!-- HEADER -->
+    <header class="bg-blue-600 text-white py-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="{% url 'home' %}" class="text-xl font-bold">Meditații</a>
+            <nav class="space-x-4">
+                {% if user.is_authenticated %}
+                    {% if user.user_type == 'teacher' %}
+                        <a href="{% url 'teacher_dashboard'%}" class="hover:text-gray-200">Dashboard</a>
+                    {% else %}
+                        <a href="{% url 'student_dashboard'%}" class="hover:text-gray-200">Dashboard</a>
+                    {% endif %}
+                    <a href="{% url 'meditation_list' %}" class="hover:text-gray-200">Meditațiile Mele</a>
+                    {% if user.user_type == 'teacher' %}
+                        <a href="{% url 'meditation_create' %}" class="hover:text-gray-200">Adaugă Meditație</a>
+                    {% endif %}
+                    <form method="post" action="{% url 'logout' %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-red-600 text-white py-1 px-3 rounded-lg hover:bg-red-700">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hover:text-gray-200">Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container mx-auto py-8 px-4 flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-white py-4 mt-auto">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Platformă Meditații. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

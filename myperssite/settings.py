@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig',
+    'core',
+    'meditatii',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'meditatii.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

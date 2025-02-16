@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Platformă de Meditații{% endblock %}
+
+{% block content %}
+<section class="text-center py-12 bg-white shadow-md rounded-lg">
+    <h1 class="text-3xl font-bold text-gray-800">Platformă de Meditații Online</h1>
+    <p class="mt-4 text-gray-600">Acces ușor și rapid la toate informațiile și detaliile necesare pentru a intra la facultate.</p>
+    {% if not user.is_authenticated %}
+    <div class="mt-6">
+        <a href="{% url 'login' %}" class="bg-blue-600 text-white py-2 px-4 rounded-lg">Login</a>
+    </div>
+    {% else %}
+        {% if user.user_type == 'student' %}
+            <a href="{% url 'student_dashboard' %}" class="text-blue-600 hover:underline">Mergi la Dashboard</a>
+        {% else %}
+            <a href="{% url 'teacher_dashboard' %}" class="text-blue-600 hover:underline">Mergi la Dashboard</a>
+        {% endif %}
+    {% endif %}
+</section>
+
+<section class="mt-12">
+    <h2 class="text-2xl font-semibold text-gray-800">Cum funcționează</h2>
+    <div class="grid md:grid-cols-3 gap-6 mt-6">
+        <div class="p-6 bg-white shadow-md rounded-lg">
+            <h3 class="text-lg font-bold">1. Primul pas</h3>
+            <p class="text-gray-600">Trimite-mi un mail sa stabiliti detaliile.</p>
+        </div>
+        <div class="p-6 bg-white shadow-md rounded-lg">
+            <h3 class="text-lg font-bold">2. Al doilea pas</h3>
+            <p class="text-gray-600">Primeste credentialele si incepe pregatirea.</p>
+        </div>
+        <div class="p-6 bg-white shadow-md rounded-lg">
+            <h3 class="text-lg font-bold">3. Ultimul pas ?</h3>
+            <p class="text-gray-600">Intra la facultatea dorita.</p>
+        </div>
+    </div>
+</section>
+
+<section class="mt-12 text-center">
+    <h2 class="text-2xl font-semibold text-gray-800">Pregătit să începi?</h2>
+    <p class="mt-4 text-gray-600">Alătură-te comunității noastre și îmbunătățește-ți rezultatele academice</p>
+    {% if not user.is_authenticated %}
+    <div class="mt-6">
+        <a href="{% url 'contact' %}" class="bg-green-600 text-white py-2 px-4 rounded-lg">Înregistrează-te Acum</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
