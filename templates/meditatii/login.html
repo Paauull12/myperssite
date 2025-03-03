@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="flex justify-center">
+    <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 class="text-3xl font-bold text-center text-gray-800">Login</h2>
+        <form method="post" class="mt-6 space-y-6">
+            {% csrf_token %}
+            <div>
+                <label for="id_username" class="block text-gray-700">Username</label>
+                <input type="text" id="id_username" name="username" class="w-full mt-2 px-4 py-3 border rounded-lg focus:ring focus:ring-blue-300">
+            </div>
+            <div>
+                <label for="id_password" class="block text-gray-700">Parolă</label>
+                <div class="relative">
+                    <input type="password" id="id_password" name="password" class="w-full mt-2 px-4 py-3 border rounded-lg focus:ring focus:ring-blue-300">
+                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-3 flex items-center text-gray-600">
+                        👁
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 text-lg">Login</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function togglePassword() {
+        var passwordField = document.getElementById("id_password");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }
+</script>
+{% endblock %}

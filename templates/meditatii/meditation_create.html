@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block title %}Adaugă Meditație & Notițe{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="bg-gray-100 p-8 rounded-lg shadow-lg border border-gray-100 w-full max-w-lg">
+        <!-- Tab-uri -->
+        <div class="flex items-center justify-center space-x-4 mb-8">
+            <button id="meditation-tab"
+                    class="flex items-center px-4 py-2 rounded-lg text-sm font-medium focus:outline-none transition-all duration-150
+                           bg-white-100 text-gray-700 hover:bg-gray-200"
+                    onclick="switchTab('meditation')">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                Meditație
+            </button>
+            <button id="notes-tab"
+                    class="flex items-center px-4 py-2 rounded-lg text-sm font-medium focus:outline-none transition-all duration-150
+                           bg-white-50 text-gray-500 hover:bg-gray-100"
+                    onclick="switchTab('notes')">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                Notițe
+            </button>
+        </div>
+
+        <!-- Formular Meditație -->
+        <div id="meditation-form" class="transition-all duration-150">
+            <div class="flex flex-col items-center mb-8">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Adaugă Meditație Nouă</h2>
+                <p class="mt-2 text-sm text-gray-600">Completează detaliile pentru noua meditație</p>
+            </div>
+
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                <div class="space-y-4">
+                    <!-- Student -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">Student</label>
+                        {{ meditation_form.student }}
+                    </div>
+
+                    <!-- Data -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">Data</label>
+                        {{ meditation_form.date }}
+                    </div>
+
+                    <!-- Suma -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">Sumă</label>
+                        {{ meditation_form.payment_amount }}
+                    </div>
+                </div>
+
+                <button type="submit"
+                        name="meditation_submit"
+                        class="w-full flex items-center justify-center px-4 py-3 border border-transparent
+                               text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600
+                               hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2
+                               focus:ring-offset-2 focus:ring-green-500 transition-all duration-150">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Salvează Meditația
+                </button>
+            </form>
+        </div>
+
+        <!-- Formular Notițe -->
+        <div id="notes-form" class="hidden transition-all duration-150">
+            <div class="flex flex-col items-center mb-8">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Adaugă Notiță Nouă</h2>
+                <p class="mt-2 text-sm text-gray-600">Completează detaliile pentru noua notiță</p>
+            </div>
+
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                <div class="space-y-4">
+                    <!-- Student -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">Student</label>
+                        {{ notes_form.student }}
+                    </div>
+
+                    <!-- Titlu -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">Titlu</label>
+                        {{ notes_form.title }}
+                    </div>
+
+                    <!-- Notița -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">Notiță</label>
+                        {{ notes_form.note }}
+                    </div>
+
+                    <!-- Data -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">Data</label>
+                        {{ notes_form.date }}
+                    </div>
+                </div>
+
+                <button type="submit"
+                        name="notes_submit"
+                        class="w-full flex items-center justify-center px-4 py-3 border border-transparent
+                               text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-500 to-blue-600
+                               hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2
+                               focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Salvează Notița
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchTab(tab) {
+    const meditationTab = document.getElementById('meditation-tab');
+    const notesTab = document.getElementById('notes-tab');
+    const meditationForm = document.getElementById('meditation-form');
+    const notesForm = document.getElementById('notes-form');
+
+    if (tab === 'meditation') {
+        meditationTab.classList.add('bg-green-100', 'text-green-700');
+        meditationTab.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:bg-gray-100');
+        notesTab.classList.remove('bg-blue-100', 'text-blue-700');
+        notesTab.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:bg-gray-100');
+
+        meditationForm.classList.remove('hidden');
+        notesForm.classList.add('hidden');
+    } else {
+        notesTab.classList.add('bg-blue-100', 'text-blue-700');
+        notesTab.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:bg-gray-100');
+        meditationTab.classList.remove('bg-green-100', 'text-green-700');
+        meditationTab.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:bg-gray-100');
+
+        notesForm.classList.remove('hidden');
+        meditationForm.classList.add('hidden');
+    }
+}
+</script>
+<style>
+    /* Stiluri comune pentru toate input-urile */
+    #meditation-form input,
+    #meditation-form select,
+    #notes-form input,
+    #notes-form select,
+    #notes-form textarea {
+        @apply block w-full rounded-md border-gray-300 shadow-sm sm:text-sm;
+    }
+
+    /* Stiluri pentru focus în formularul de meditații */
+    #meditation-form input:focus,
+    #meditation-form select:focus {
+        @apply border-green-500 ring-2 ring-green-500 ring-opacity-50 outline-none;
+    }
+
+    /* Stiluri pentru focus în formularul de notițe */
+    #notes-form input:focus,
+    #notes-form select:focus,
+    #notes-form textarea:focus {
+        @apply border-blue-500 ring-2 ring-blue-500 ring-opacity-50 outline-none;
+    }
+
+    /* Stiluri specifice pentru textarea */
+    #notes-form textarea {
+        @apply resize-none h-32;
+    }
+</style>
+{% endblock %}

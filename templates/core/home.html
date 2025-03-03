@@ -1,0 +1,118 @@
+{% load  static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofoliu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/picturei.png' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-10px) translateX(5px); }
+            50% { transform: translateY(0px) translateX(10px); }
+            75% { transform: translateY(10px) translateX(5px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        .tech-icon {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .tech-icon:nth-child(2n) {
+            animation-delay: 1s;
+        }
+
+        .tech-icon:nth-child(3n) {
+            animation-delay: 2s;
+        }
+
+        .tech-icon:nth-child(4n) {
+            animation-delay: 3s;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-gray-900/80 backdrop-blur-sm z-10">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-bold text-xl"><a href="/">Salut :)</a></div>
+                <div class="space-x-6">
+                    <a href="/cv/" class="hover:text-blue-400">CV</a>
+                    <a href="/meditatii/" class="hover:text-blue-400">Meditatii</a>
+                    <a href="/contact/" class="hover:text-blue-400">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="min-h-screen container mx-auto px-6 py-20">
+        <div class="flex flex-col items-center justify-center pt-20">
+            <!-- Text Content -->
+            <div class="text-center max-w-3xl">
+                <h1 class="text-5xl font-bold mb-6">{{ name }}</h1>
+                <div class="text-xl text-gray-400 mb-8 h-20">
+                    <span id="typed"></span>
+                </div>
+
+                <!-- Technology Stack -->
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-12 mt-20">
+                    <!-- Python -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <i class="devicon-python-plain colored text-5xl"></i>
+                        <span class="mt-2 text-sm">Python</span>
+                    </div>
+                    <!-- Django -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <i class="devicon-django-plain colored text-5xl"></i>
+                        <span class="mt-2 text-sm">Django</span>
+                    </div>
+                    <!-- Spring Boot -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <i class="devicon-spring-plain colored text-5xl"></i>
+                        <span class="mt-2 text-sm">Spring Boot</span>
+                    </div>
+                    <!-- C++ -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <i class="devicon-cplusplus-plain colored text-5xl"></i>
+                        <span class="mt-2 text-sm">C++</span>
+                    </div>
+                    <!-- Docker -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <i class="devicon-docker-plain colored text-5xl"></i>
+                        <span class="mt-2 text-sm">Docker</span>
+                    </div>
+                    <!-- Git -->
+
+                    <!-- Go -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <i class="devicon-go-plain colored text-5xl"></i>
+                        <span class="mt-2 text-sm">Go</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var typed = new Typed('#typed', {
+            strings: [
+                'Future Backend Engineer',
+                'Passionate learning about high-performance systems',
+                'Reinventing the way we deploy apps',
+                'Problem solver at least partially :)'
+            ],
+            typeSpeed: 50,
+            backSpeed: 30,
+            backDelay: 1500,
+            loop: true
+        });
+    </script>
+</body>
+</html>

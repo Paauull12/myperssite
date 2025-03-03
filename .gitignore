@@ -1,0 +1,56 @@
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore Virtual Environment
+.venv/
+venv/
+
+# Ignore Django migrations
+*/migrations/*
+
+# Ignore IDE and editor files
+.vscode/
+*.swp
+*.swo
+.idea/
+*.iml
+
+# Ignore logs and database files
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+# Ignore environment files
+.env
+*.env
+
+# Ignore static and media files (optional, if generated dynamically)
+staticfiles/
+media/
+
+# Ignore cached dependencies and packages
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+*.egg
+
+# Ignore coverage and testing files
+.coverage
+htmlcov/
+*.cover
+.tox/
+.nox/
+.pytest_cache/
+__pypackages__/
+
+# Ignore Docker and deployment files (if applicable)
+docker-compose.override.yml
+.DS_Store
+
+# Ignore secrets (optional)
+secrets.json
+config/settings/local.py
+config/settings/dev.py
